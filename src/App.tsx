@@ -1,9 +1,9 @@
-import "./App.css";
+import Form from "./components/Form";
 
 function App() {
   return (
     <>
-      <h1 className="text-5xl font-bold underline">Hello world!</h1>
+      <Form />
     </>
   );
 }
