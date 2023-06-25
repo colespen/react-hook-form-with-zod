@@ -25,9 +25,17 @@ const validationSchema = z
     path: ["confirmPassword"],
   });
 
-type validationSchema = z.infer<typeof validationSchema>;
+type ValidationSchema = z.infer<typeof validationSchema>;
 
 const Form = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { error },
+  } = useForm<ValidationSchema>({
+    resolver: zodResolver(validationSchema),
+  });
+
   return (
     <form className="px-8 pt-6 pb-8 mb-4">
       <div className="mb-4 md:flex md:justify-between">
