@@ -64,11 +64,11 @@ const Form = () => {
             // ref={ref} // assign ref prop
             {...register("firstName")} // instead, spread & same name as validation schema
           />
-          {errors.firstName && (
-            <p className="text-xs italic text-red-500 mt-2">
-              {errors.firstName?.message}
+          
+            <p className="text-xs italic text-red-500 mt-2 h-4">
+              {errors.firstName && errors.firstName?.message}
             </p>
-          )}
+          
         </div>
         <div className="md:ml-2">
           <label
@@ -87,7 +87,7 @@ const Form = () => {
             {...register("lastName")}
           />
           {errors.lastName && (
-            <p className="text-xs italic text-red-500 mt-2">
+            <p className="text-xs italic text-red-500 mt-2 h-4">
               {errors.lastName?.message}
             </p>
           )}
@@ -109,11 +109,11 @@ const Form = () => {
           placeholder="Email"
           {...register("email")}
         />
-        {errors.email && (
-          <p className="text-xs italic text-red-500 mt-2">
-            {errors.email?.message}
+       
+          <p className="text-xs italic text-red-500 mt-2 h-4">
+            {errors.email &&  errors.email?.message}
           </p>
-        )}
+      
       </div>
       <div className="mb-4 md:flex md:justify-between">
         <div className="mb-4 md:mr-2 md:mb-0">
@@ -131,11 +131,11 @@ const Form = () => {
             type="password"
             {...register("password")}
           />
-          {errors.password && (
-            <p className="text-xs italic text-red-500 mt-2">
-              {errors.password?.message}
+       
+            <p className="text-xs italic text-red-500 mt-2 h-4">
+              {errors.password &&  errors.password?.message}
             </p>
-          )}
+     
         </div>
         <div className="md:ml-2">
           <label
@@ -152,11 +152,11 @@ const Form = () => {
             type="password"
             {...register("confirmPassword")}
           />
-          {errors.confirmPassword && (
-            <p className="text-xs italic text-red-500 mt-2">
-              {errors.confirmPassword?.message}
+          
+            <p className="text-xs italic text-red-500 mt-2 h-4">
+              {errors.confirmPassword && errors.confirmPassword?.message}
             </p>
-          )}
+       
         </div>
       </div>
       <div className="mb-4">
@@ -174,11 +174,11 @@ const Form = () => {
         >
           Accept Terms & Conditions
         </label>
-        {errors.terms && (
-          <p className="text-xs italic text-red-500 mt-2">
-            {errors.terms?.message}
+  
+          <p className="text-xs italic text-red-500 mt-2 h-4">
+            {errors.terms && errors.terms?.message}
           </p>
-        )}
+    
       </div>
       <div className="mb-6 text-center">
         <button
