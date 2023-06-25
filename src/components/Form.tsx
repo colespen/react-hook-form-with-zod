@@ -31,13 +31,18 @@ const Form = () => {
   const {
     register,
     handleSubmit,
-    formState: { error },
+    formState: { errors },
   } = useForm<ValidationSchema>({
+    // resolver property is used to pass the validation schema
     resolver: zodResolver(validationSchema),
   });
 
+  const onSubmit: SubmitHandler<ValidationSchema> = (data) => console.log(data);
+
+  console.log("errors:", errors);
+
   return (
-    <form className="px-8 pt-6 pb-8 mb-4">
+    <form className="px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-4 md:flex md:justify-between">
         <div className="mb-4 md:mr-2 md:mb-0">
           <label
@@ -47,11 +52,23 @@ const Form = () => {
             First Name
           </label>
           <input
-            className="bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-slate-400"
+            className={`bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] ${
+              errors.firstName && "border-red-500"
+            } focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-[#5a596c]`}
             id="firstName"
             type="text"
             placeholder="First Name"
+            // onChange={onChange} // assign onChange event
+            // onBlur={onBlur} // assign onBlur event
+            // name={name} // assign name prop
+            // ref={ref} // assign ref prop
+            {...register("firstName")} // instead, spread & same name as validation schema
           />
+          {errors.firstName && (
+            <p className="text-xs italic text-red-500 mt-2">
+              {errors.firstName?.message}
+            </p>
+          )}
         </div>
         <div className="md:ml-2">
           <label
@@ -61,11 +78,19 @@ const Form = () => {
             Last Name
           </label>
           <input
-            className="bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-slate-400"
+            className={`bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] ${
+                errors.firstName && "border-red-500"
+              } focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-[#5a596c]`}
             id="lastName"
             type="text"
             placeholder="Last Name"
+            {...register("lastName")}
           />
+          {errors.lastName && (
+            <p className="text-xs italic text-red-500 mt-2">
+              {errors.lastName?.message}
+            </p>
+          )}
         </div>
       </div>
       <div className="mb-4">
@@ -76,11 +101,19 @@ const Form = () => {
           Email
         </label>
         <input
-          className="bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-slate-400"
+          className={`bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] ${
+            errors.firstName && "border-red-500"
+          } focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-[#5a596c]`}
           id="email"
           type="email"
           placeholder="Email"
+          {...register("email")}
         />
+        {errors.email && (
+          <p className="text-xs italic text-red-500 mt-2">
+            {errors.email?.message}
+          </p>
+        )}
       </div>
       <div className="mb-4 md:flex md:justify-between">
         <div className="mb-4 md:mr-2 md:mb-0">
@@ -91,10 +124,18 @@ const Form = () => {
             Password
           </label>
           <input
-            className="bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-slate-400"
+            className={`bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] ${
+                errors.firstName && "border-red-500"
+              } focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-[#5a596c]`}
             id="password"
             type="password"
+            {...register("password")}
           />
+          {errors.password && (
+            <p className="text-xs italic text-red-500 mt-2">
+              {errors.password?.message}
+            </p>
+          )}
         </div>
         <div className="md:ml-2">
           <label
@@ -104,24 +145,44 @@ const Form = () => {
             Confirm Password
           </label>
           <input
-            className="bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline"
+            className={`bg-[#242424] w-full px-3 py-2 text-sm leading-tight text-[#d1d1d1] border-2 border-[#444351] ${
+                errors.firstName && "border-red-500"
+              } focus:border-slate-600 rounded appearance-none focus:outline-none focus:shadow-outline placeholder:text-[#5a596c]`}
             id="c_password"
             type="password"
+            {...register("confirmPassword")}
           />
+          {errors.confirmPassword && (
+            <p className="text-xs italic text-red-500 mt-2">
+              {errors.confirmPassword?.message}
+            </p>
+          )}
         </div>
       </div>
       <div className="mb-4">
-        <input type="checkbox" id="terms" className="bg-[#242424]" />
+        <input
+          type="checkbox"
+          id="terms"
+          className={`bg-[#242424] ml-2 mb-2 text-sm font-bold ${
+            errors.terms ? "text-red-500" : "text-gray-700"
+          }`}
+          {...register("terms")}
+        />
         <label
           htmlFor="terms"
           className="ml-2 mb-2 text-sm font-bold text-[#d1d1d1]"
         >
           Accept Terms & Conditions
         </label>
+        {errors.terms && (
+          <p className="text-xs italic text-red-500 mt-2">
+            {errors.terms?.message}
+          </p>
+        )}
       </div>
       <div className="mb-6 text-center">
         <button
-          className="w-full px-4 py-2 font-bold text-white bg-blue-800 rounded-full hover:bg-blue-900 focus:outline-none focus:shadow-outline"
+          className="w-full px-4 py-2 font-bold text-white bg-[#575490] rounded-full hover:bg-[#1d1c30] focus:outline-none focus:shadow-outline"
           type="submit"
         >
           Register Account
